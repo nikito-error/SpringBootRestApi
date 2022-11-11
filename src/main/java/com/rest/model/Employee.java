@@ -14,8 +14,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "tbl_employee")
 public class Employee {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id // GenerationType.Auto will work only under hibernate 5.0 version
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "name")
