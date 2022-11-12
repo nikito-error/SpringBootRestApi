@@ -2,6 +2,8 @@ package com.rest.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +41,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/employees")
-	public Employee saveEmployee(@RequestBody Employee employee) {
+	public Employee saveEmployee(@Valid @RequestBody Employee employee) {
 		return eService.saveEmployee(employee);
 	}
 
