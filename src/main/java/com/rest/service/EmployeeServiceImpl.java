@@ -14,35 +14,57 @@ import com.rest.repository.EmployeeRepository;
 public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
+
 	@Override
 	public List<Employee> getEmployees() {
-		// TODO Auto-generated method stub
+
 		return employeeRepository.findAll();
 	}
+
 	@Override
 	public Employee saveEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+
 		return employeeRepository.save(employee);
 	}
+
 	@Override
 	public Employee getSingleEmployee(Long id) {
-		// TODO Auto-generated method stub
-		Optional<Employee> employee=employeeRepository.findById(id);
-		if(employee.isPresent()) {
+
+		Optional<Employee> employee = employeeRepository.findById(id);
+		if (employee.isPresent()) {
 			return employee.get();
 		}
-		throw new RuntimeException("Employee is not present with id "+id);
+		throw new RuntimeException("Employee is not present with id " + id);
 
 	}
+
 	@Override
 	public void deleteEmployee(Long id) {
-		// TODO Auto-generated method stub
+
 		employeeRepository.deleteById(id);
 	}
+
 	@Override
 	public Employee updateEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+
 		return employeeRepository.save(employee);
 	}
+
+	@Override
+	public List<Employee> getEmployeeByName(String name) {
+
+		return employeeRepository.findByName(name);
+	}
+
+	@Override
+	public List<Employee> getEmployeeByNameAndDepartment(String name, String department) {
+		return employeeRepository.findByNameAndDepartment(name, department);
+	}
+
+	@Override
+	public List<Employee> getEmployeeByKeyword(String name) {
+		return employeeRepository.findByNameContaining(name);
+	}
+	
 
 }
