@@ -25,13 +25,10 @@ public class GlobalException extends ResponseEntityExceptionHandler {
 		body.put("status", status.value());
 
 		// get all errors
-		List<String> erros = ex.getBindingResult()
-				.getFieldErrors()
-				.stream()
-				.map(x -> x.getDefaultMessage())
+		List<String> erros = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
 				.collect(Collectors.toList());
 		body.put("errors", erros);
-		return new ResponseEntity<Object>(body,status);
+		return new ResponseEntity<Object>(body, status);
 	}
 
 }

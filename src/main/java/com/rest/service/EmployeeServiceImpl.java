@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.rest.model.Employee;
@@ -16,20 +20,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository employeeRepository;
 
 	@Override
-	public List<Employee> getEmployees() {
-
-		return employeeRepository.findAll();
+	public List<Employee> getEmployees(int pageNumber, int pageSize) {
+		Pageable pages = PageRequest.of(pageNumber, pageSize, Direction.ASC, "id");
+		return employeeRepository.findAll(pages).getContent();
 	}
 
 	@Override
 	public Employee saveEmployee(Employee employee) {
-
 		return employeeRepository.save(employee);
 	}
 
 	@Override
 	public Employee getSingleEmployee(Long id) {
-
 		Optional<Employee> employee = employeeRepository.findById(id);
 		if (employee.isPresent()) {
 			return employee.get();
@@ -40,19 +42,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public void deleteEmployee(Long id) {
-
 		employeeRepository.deleteById(id);
 	}
 
 	@Override
 	public Employee updateEmployee(Employee employee) {
-
 		return employeeRepository.save(employee);
 	}
 
 	@Override
 	public List<Employee> getEmployeeByName(String name) {
-
 		return employeeRepository.findByName(name);
 	}
 
@@ -63,8 +62,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<Employee> getEmployeeByKeyword(String name) {
-		return employeeRepository.findByNameContaining(name);
+		Sort sort = Sort.by(Sort.Direction.ASC, "id");
+		return employeeRepository.findByNameContaining(name, sort);
 	}
-	
+
+	@Override
+	public List<Employee> getEmployeeByDepartment(String department) {
+		return employeeRepository.getEmployeeByDepartment(department);
+	}
+
+	@Override
+	public Integer deleteByEmployeeName(String name) {
+		return employeeRepository.deleteEmployeeByName(name);
+	}
 
 }

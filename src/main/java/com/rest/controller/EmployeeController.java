@@ -28,13 +28,14 @@ public class EmployeeController {
 	private EmployeeService eService;
 
 	@GetMapping("/employees")
-	public ResponseEntity<List<Employee>> getEmployees() {
-		return new ResponseEntity<List<Employee>>(eService.getEmployees(),HttpStatus.OK);
+	public ResponseEntity<List<Employee>> getEmployees(@RequestParam Integer pageNumber,
+			@RequestParam Integer pageSize) {
+		return new ResponseEntity<List<Employee>>(eService.getEmployees(pageNumber, pageSize), HttpStatus.OK);
 	}
 
 	@GetMapping("employees/{id}")
 	public ResponseEntity<Employee> getEmployeesById(@PathVariable Long id) {
-		return new ResponseEntity<Employee>(eService.getSingleEmployee(id),HttpStatus.OK);
+		return new ResponseEntity<Employee>(eService.getSingleEmployee(id), HttpStatus.OK);
 	}
 
 	@DeleteMapping("employees")
@@ -45,28 +46,39 @@ public class EmployeeController {
 
 	@PostMapping("/employees")
 	public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee employee) {
-		return new ResponseEntity<Employee>(eService.saveEmployee(employee),HttpStatus.CREATED);
+		return new ResponseEntity<Employee>(eService.saveEmployee(employee), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/employees/{id}")
 	public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
 		employee.setId(id);
-		return new ResponseEntity<Employee>(eService.updateEmployee(employee),HttpStatus.OK);
+		return new ResponseEntity<Employee>(eService.updateEmployee(employee), HttpStatus.OK);
 	}
-	
-	@GetMapping("/employees/filterName")
-	public ResponseEntity<List<Employee>> getEmployeesByName(@RequestParam String name){
-		return new ResponseEntity<List<Employee>>(eService.getEmployeeByName(name),HttpStatus.OK);
-	}
-	
-	@GetMapping("/employees/filterNameAndDepartment")
-	public ResponseEntity<List<Employee>> getEmployeesByNameAndDepartment(@RequestParam String name,@RequestParam String department){
-		return new ResponseEntity<List<Employee>>(eService.getEmployeeByNameAndDepartment(name,department),HttpStatus.OK);
-	}
-	@GetMapping("/employees/filterNameLike")
-	public ResponseEntity<List<Employee>> getEmployeesByKeywords(@RequestParam String name){
-		return new ResponseEntity<List<Employee>>(eService.getEmployeeByKeyword(name),HttpStatus.OK);
-	}
-	
 
+	@GetMapping("/employees/filterName")
+	public ResponseEntity<List<Employee>> getEmployeesByName(@RequestParam String name) {
+		return new ResponseEntity<List<Employee>>(eService.getEmployeeByName(name), HttpStatus.OK);
+	}
+
+	@GetMapping("/employees/filterNameAndDepartment")
+	public ResponseEntity<List<Employee>> getEmployeesByNameAndDepartment(@RequestParam String name,
+			@RequestParam String department) {
+		return new ResponseEntity<List<Employee>>(eService.getEmployeeByNameAndDepartment(name, department),
+				HttpStatus.OK);
+	}
+
+	@GetMapping("/employees/filterNameLike")
+	public ResponseEntity<List<Employee>> getEmployeesByKeywords(@RequestParam String name) {
+		return new ResponseEntity<List<Employee>>(eService.getEmployeeByKeyword(name), HttpStatus.OK);
+	}
+
+	@GetMapping("/employees/dept/{department}")
+	public ResponseEntity<List<Employee>> getEmployeesByDepartment(@PathVariable String department) {
+		return new ResponseEntity<List<Employee>>(eService.getEmployeeByDepartment(department), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/employees/delete/{name}")
+	public ResponseEntity<Integer> deleteEmployeesByName(@PathVariable String name) {
+		return new ResponseEntity<Integer>(eService.deleteByEmployeeName(name), HttpStatus.OK);
+	}
 }

@@ -27,25 +27,26 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	@NotBlank(message="Name should not be null")
+	@NotBlank(message = "Name should not be null")
 	@Column(name = "name")
 	private String name;
 	@Column(name = "age")
-	private Long age=0L;
+	private Long age = 0L;
 	@Column(name = "location")
 	private String location;
-	@Email(message="Please enter valid email address")
+	@Email(message = "Please enter valid email address")
 	@Column(name = "email")
 	private String email;
-	@NotBlank(message="Depratment should not be null")
+	@NotBlank(message = "Depratment should not be null")
 	@Column(name = "department")
 	private String department;
 	@CreationTimestamp
-	@Column(name = "created_at",nullable=false,updatable=false)
+	@Column(name = "created_at", nullable = false, updatable = false)
 	private Date createdDate;
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private Date updateDate;
+
 	public Long getId() {
 		return id;
 	}
@@ -115,7 +116,5 @@ public class Employee {
 		return "Employee [id=" + id + ", name=" + name + ", age=" + age + ", location=" + location + ", email=" + email
 				+ ", department=" + department + ", createdDate=" + createdDate + ", updateDate=" + updateDate + "]";
 	}
-
-
 
 }
